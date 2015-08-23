@@ -1,3 +1,6 @@
+## makeCacheMatrix: This function creates a special "matrix" object
+## that can cache its inverse.
+
 makeCacheMatrix <- function(mat=matrix()) {
   i <- NULL
   set <- function(y) {              ## set matrix
@@ -12,6 +15,13 @@ makeCacheMatrix <- function(mat=matrix()) {
        getinv = getinv)
 }
 
+## cacheSolve: This function computes the inverse of the special "matrix"
+## returned by makeCacheMatrix above. If the inverse has already been
+## calculated (and the matrix has not changed), then the cachesolve
+## should retrieve the inverse from the cache.
+## it also check for all necessary condition for matrix inverse
+
+
 cacheSolve <- function(mat, ...) {
   
   i <- mat$getinv()
@@ -23,23 +33,32 @@ cacheSolve <- function(mat, ...) {
   
   data <- mat$get()
   
-  if(ncol(data)==nrow(data))     ## checking for square matrix
+  if(sum(is.na(data))==0)          ## checking for NAs in the matrix
   {
-    if(det(data)!=0)             ## checking for determinant of matrix
+    if(ncol(data)==nrow(data))     ## checking for square matrix
     {
-      i <- solve(data, ...)
+      if(det(data)!=0)             ## checking for determinant of matrix
+      {
+        i <- solve(data, ...)
+      }
+      else
+      {
+        print("Can't perform invers as the determinat of matrix is zero")
+        i<-NaN
+      }
     }
     else
     {
-      print("Can't perform invers as the determinat of matrix is zero")
+      print("Can't perform invers as it isn't a square matrix")
       i<-NaN
     }
   }
   else
   {
-    print("Can't perform invers as it isn't a square matrix")
+    print("Can't perform invers as their are NA(s) in matrix")
     i<-NaN
   }
+  
   mat$setinv(i)
   i
   }
