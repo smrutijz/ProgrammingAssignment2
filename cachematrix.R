@@ -1,4 +1,4 @@
-makemat <- function(mat=matrix()) {
+makeCacheMatrix <- function(mat=matrix()) {
   i <- NULL
   set <- function(y) {              ## set matrix
     mat <<- y
@@ -12,7 +12,7 @@ makemat <- function(mat=matrix()) {
        getinv = getinv)
 }
 
-cacheinv <- function(mat, ...) {
+cacheSolve <- function(mat, ...) {
   
   i <- mat$getinv()
   
