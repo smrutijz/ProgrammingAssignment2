@@ -37,7 +37,7 @@ cacheSolve <- function(mat, ...) {
   {
     if(ncol(data)==nrow(data))     ## checking for square matrix
     {
-      if(det(data)!=0)             ## checking for determinant of matrix
+      if(det(data)!=0)             ## checking for determinant of matrix (testing for sigularity of matrix)
       {
         i <- solve(data, ...)
       }
